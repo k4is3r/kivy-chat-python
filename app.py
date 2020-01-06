@@ -6,10 +6,14 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 
 
+class ConnectPage(GridLayout):
+    def __init__(self, **kwargs):
+        super().__init__(self, **kwargs)
+
+
 class ChatIpApp(App):
     def build(self):
-        return Label(text='Hi from kivy')
-
+        return ConnectPage()
 
 
 if __name__ == '__main__':
