@@ -19,9 +19,9 @@ class ConnectPage(GridLayout):
                 prev_port = d[1]
                 prev_username = d[2]
         else:
-            prev_ip = d[0]
-            prev_port = d[1]
-            prev_username = d[2]
+            prev_ip = ''
+            prev_port = ''
+            prev_username = ''
         
         self.add_widget(Label(text='IP: '))
         self.ip = TextInput(text=prev_ip ,multiline=False)
