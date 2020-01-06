@@ -7,6 +7,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
+import socket_client
 
 import os
 
@@ -62,6 +63,18 @@ class ConnectPage(GridLayout):
         ip = self.ip.text
         username =  self.username.text
 
+        if not socket_client.connect(ip, port, username, show_error):
+            return 
+        
+        chat_app.create_chat_page()
+        chat_app.screen_manager.current = 'Chat'
+
+class ChatPage(GridLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.cols = 1
+
+
 class InfoPage(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -81,6 +94,7 @@ class InfoPage(GridLayout):
     def update_text_width(self, *_):
         self.message.text_size = (self.message.width*0.9, None)
 
+
 class ChatIpApp(App):
     title = 'Chat IP'
     def build(self):
@@ -96,8 +110,14 @@ class ChatIpApp(App):
         screen.add_widget(self.info_page)
         self.screen_manager.add_widget(screen)
 
+        
         return self.screen_manager
-
+    
+    def create_chat_page(self):
+        self.chat_page = ChatePage()
+        screen = Screen(name='Chat')
+        screen.add_widget(self.chat_page)
+        self.screen_manager.add_widget(screen) 
 
 if __name__ == '__main__':
     chat_app = ChatIpApp()
