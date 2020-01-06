@@ -5,6 +5,7 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.uix.screenmanager import ScreenManager, Screen
 import os
 
 class ConnectPage(GridLayout):
@@ -53,7 +54,19 @@ class ConnectPage(GridLayout):
 class ChatIpApp(App):
     title = 'Chat IP'
     def build(self):
-        return ConnectPage()
+        self.screen_manager = ScreenManager()
+
+        self.connect_page = ConnectPage()
+        screen = Screen(name='Connect')        
+        screen.add_widget(self.connect_page)
+        self.screen_manager.add_widget(screen)
+
+        self.info_page = InfoPage()
+        screen = Screen(name='InfoPage')
+        screen.add_widget(self.info_page)
+        self.screen_manager.add_widget(screen)
+
+        return self.screen_manager
 
 
 if __name__ == '__main__':
