@@ -91,10 +91,11 @@ class ChatPage(GridLayout):
         bottom_line = GridLayout(cols=2)
         bottom_line.add_widget(self.new_message)
         bottom_line.add_widget(self.send)
-	
+        self.add_widget(bottom_line)
+        	
 
-    def send_message():
-        pass
+    def send_message(self, _):
+        print('Send a Message!!')
 
 class InfoPage(GridLayout):
     def __init__(self, **kwargs):
