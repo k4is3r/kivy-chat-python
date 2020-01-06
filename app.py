@@ -45,11 +45,33 @@ class ConnectPage(GridLayout):
         port = self.port.text
         ip = self.ip.text
         username = self.username.text
-        print(f' Attemting to join {ip}:{port} as {username}')
+        #print(f' Attemting to join {ip}:{port} as {username}')
         
         with open('prev_details.txt','w') as f:
             f.write(f'{ip},{port},{username}')
 
+        info = f' Attemting to join {ip}:{port} as {username}'
+        chat_app.info_page.update_info(info)
+        chat_app.screen_manager.current= 'Info'
+
+class InfoPage(GridLayout):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.cols = 1
+        
+        self.message = Label(halign='center',
+                             valign='middle',
+                             font_size=30,
+                             )
+        self.message.bind(width=self.update_text_width)
+        self.add_widget(self.message)
+
+
+    def update_info(self, message):
+        self.message.text = message
+    
+    def update_text_width(self, *_):
+        self.message.text_size = (self.message.width*0.9, None)
 
 class ChatIpApp(App):
     title = 'Chat IP'
@@ -62,7 +84,7 @@ class ChatIpApp(App):
         self.screen_manager.add_widget(screen)
 
         self.info_page = InfoPage()
-        screen = Screen(name='InfoPage')
+        screen = Screen(name='Info')
         screen.add_widget(self.info_page)
         self.screen_manager.add_widget(screen)
 
@@ -70,5 +92,6 @@ class ChatIpApp(App):
 
 
 if __name__ == '__main__':
-    ChatIpApp().run()
+    chat_app = ChatIpApp()
+    chat_app.run()
 
