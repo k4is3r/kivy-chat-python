@@ -6,6 +6,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.clock import Clock
+
 import os
 
 class ConnectPage(GridLayout):
@@ -53,6 +55,12 @@ class ConnectPage(GridLayout):
         info = f' Attemting to join {ip}:{port} as {username}'
         chat_app.info_page.update_info(info)
         chat_app.screen_manager.current= 'Info'
+        Clock.schedule_once(self.connect, 1)
+    
+    def connect(self, _):
+        port = int(self.port.text)
+        ip = self.ip.text
+        username =  self.username.text
 
 class InfoPage(GridLayout):
     def __init__(self, **kwargs):

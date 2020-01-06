@@ -19,7 +19,7 @@ server_socket.bind((IP,PORT))
 
 server_socker.listen()
 
-socker_list = [server_socket]
+sockets_list = [server_socket]
 
 clients = {}
 
@@ -38,7 +38,7 @@ def receive_message(client_socket):
         return False
 
 while True:
-    read_sockets, _, excpetion_sockets =  select.select(socket_list, [], sockets_list)
+    read_sockets, _, excpetion_sockets =  select.select(sockets_list, [], sockets_list)
     
     for notified_socket in read_sockets:
         if notified_socket == server_socket:
@@ -59,3 +59,11 @@ while True:
                 del clients[notified_socket]
                 continue
             user = clients[notified_socket]
+            print(f'Received message from {user["data"].decode("utf-8")}: {message["data"].decode("utf-8")}')
+            for client_socket in clients:
+                if client_socket != notified_socket:
+                    client_socket.send(user['header'] + user['data'] + message['header'] + message['data'])
+    for notified_socket in exception_sockets:
+        socket_list.remove(notified_socket)
+        del clients[notified_socket]
+
