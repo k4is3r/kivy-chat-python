@@ -25,6 +25,7 @@ class ConnectPage(GridLayout):
 
 
 class ChatIpApp(App):
+    title = 'Chat IP'
     def build(self):
         return ConnectPage()
 
