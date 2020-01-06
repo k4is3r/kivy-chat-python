@@ -4,7 +4,7 @@ from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
-
+from kivy.uix.button import Button
 
 class ConnectPage(GridLayout):
     def __init__(self, **kwargs):
@@ -22,6 +22,10 @@ class ConnectPage(GridLayout):
         self.add_widget(Label(text='Username: '))
         self.username = TextInput(multiline=False)
         self.add_widget(self.username)
+        
+        self.join = Button(text='Join')
+        self.add_widget(Label())
+        self.add_widget(self.join)
 
 
 class ChatIpApp(App):
