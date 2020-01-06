@@ -8,7 +8,7 @@ from kivy.uix.textinput import TextInput
 
 class ConnectPage(GridLayout):
     def __init__(self, **kwargs):
-        super().__init__(self, **kwargs)
+        super().__init__(**kwargs)
         self.cols = 2
         
         self.add_widget(Label(text='IP: '))
@@ -16,11 +16,11 @@ class ConnectPage(GridLayout):
         self.add_widget(self.ip)
         
         self.add_widget(Label(text='Port: '))
-        self.port = TextInput(multiline=False))
+        self.port = TextInput(multiline=False)
         self.add_widget(self.port)
 
         self.add_widget(Label(text='Username: '))
-        self.username = TextInput(multiline=False))
+        self.username = TextInput(multiline=False)
         self.add_widget(self.username)
 
 
