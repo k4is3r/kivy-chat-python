@@ -9,6 +9,11 @@ from kivy.uix.textinput import TextInput
 class ConnectPage(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(self, **kwargs)
+        self.cols = 2
+        
+        self.add_widget(Label(text='IP: '))
+        self.ip = TextInput(multiline=False)
+        self.add_widget(self.ip)
 
 
 class ChatIpApp(App):
