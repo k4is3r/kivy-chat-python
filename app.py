@@ -5,11 +5,23 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+import os
 
 class ConnectPage(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 2
+        
+        if os.path.isfile('prev_details.txt'):
+            with open('prev_details.txt','r') as f:
+                d = f.read().split(',')
+                prev_ip = d[0]
+                prev_port = d[1]
+                prev_username = d[2]
+        else:
+            prev_ip = d[0]
+            prev_port = d[1]
+            prev_username = d[2]
         
         self.add_widget(Label(text='IP: '))
         self.ip = TextInput(multiline=False)
@@ -33,6 +45,10 @@ class ConnectPage(GridLayout):
         ip = self.ip.text
         username = self.username.text
         print(f' Attemting to join {ip}:{port} as {username}')
+        
+        with open('prev_details.txt','w') as f:
+            f.write(f'{ip},{port},{username}')
+
 
 class ChatIpApp(App):
     title = 'Chat IP'
