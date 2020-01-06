@@ -7,6 +7,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
+from kivy.core.window import Window
 import socket_client
 import sys
 
@@ -75,8 +76,25 @@ class ChatPage(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 1
-        self.add_widget(Label(text='It works, we are in the chatPage'))
+        self.rows = 2
+        
+        self.history = Label(height=Window.size[1]*0.9,
+                             size_hint_y=None)
+        self.add_widget(self.history)
 
+        self.new_message = TextInput(width=Window.size[0]*0.8,
+                                     size_hint_y=None,
+                                     multiline=False)
+        self.send = Button(text='Send')
+        self.send.bind(on_press= self.send_message)
+        
+        bottom_line = GridLayout(cols=2)
+        bottom_line.add_widget(self.new_message)
+        bottom_line.add_widget(self.send)
+	
+
+    def send_message():
+        pass
 
 class InfoPage(GridLayout):
     def __init__(self, **kwargs):
@@ -117,7 +135,7 @@ class ChatIpApp(App):
         return self.screen_manager
     
     def create_chat_page(self):
-        self.chat_page = ChatePage()
+        self.chat_page = ChatPage()
         screen = Screen(name='Chat')
         screen.add_widget(self.chat_page)
         self.screen_manager.add_widget(screen) 
