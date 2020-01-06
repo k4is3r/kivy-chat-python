@@ -1,3 +1,5 @@
 .venv/
 .app.py.swp
 prev_details.txt
+.socket_server.py.swp
+
