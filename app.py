@@ -8,6 +8,7 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
 from kivy.core.window import Window
+from kivy.uix.scrollview import ScrollView
 import socket_client
 import sys
 
@@ -116,6 +117,24 @@ class InfoPage(GridLayout):
     def update_text_width(self, *_):
         self.message.text_size = (self.message.width*0.9, None)
 
+class ScrollableLabel(ScrollView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.layout = GridLayout(cols=1, size_hint_y=None)
+        self.add_widget(self.layout)
+
+        self.chat_history = Label(size_hint_y= None,
+                                  markup=True)
+        self.scroll_to_point = Label()
+        self.layout.add_widget(self.chat_history)
+        self.layout.add_widget(self.scroll_to_point)
+    
+    def update_chat_history(self, message):
+        self.chat_history.text += '\n' + message
+        self.layout.height = self.chat_history.texture_size[1]+15
+        self.chat_history.height = self.chat_history.texture_size[1]
+        self.chat_history.text_size = (self.chat_history.width*0.98, None)
+        self.scroll_to(self.scroll_to_point)
 
 class ChatIpApp(App):
     title = 'Chat IP'
@@ -140,6 +159,7 @@ class ChatIpApp(App):
         screen = Screen(name='Chat')
         screen.add_widget(self.chat_page)
         self.screen_manager.add_widget(screen) 
+
 
 def show_error(message):
     chat_app.info_page.update_info(message)
