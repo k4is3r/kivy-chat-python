@@ -8,6 +8,7 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.clock import Clock
 import socket_client
+import sys
 
 import os
 
@@ -69,10 +70,12 @@ class ConnectPage(GridLayout):
         chat_app.create_chat_page()
         chat_app.screen_manager.current = 'Chat'
 
+
 class ChatPage(GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.cols = 1
+        self.add_widget(Label(text='It works, we are in the chatPage'))
 
 
 class InfoPage(GridLayout):
@@ -118,6 +121,11 @@ class ChatIpApp(App):
         screen = Screen(name='Chat')
         screen.add_widget(self.chat_page)
         self.screen_manager.add_widget(screen) 
+
+def show_error(message):
+    chat_app.info_page.update_info(message)
+    chat_app.screen_manager.current = 'Info'
+    Clock.schedule_once(sys.exit, 10)
 
 if __name__ == '__main__':
     chat_app = ChatIpApp()

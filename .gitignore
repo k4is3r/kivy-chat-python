@@ -3,3 +3,4 @@
 prev_details.txt
 .socket_server.py.swp
 .socket_client.py.swp
+__pycache__/
