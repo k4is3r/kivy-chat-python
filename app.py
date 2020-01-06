@@ -14,6 +14,10 @@ class ConnectPage(GridLayout):
         self.add_widget(Label(text='IP: '))
         self.ip = TextInput(multiline=False)
         self.add_widget(self.ip)
+        
+        self.add_widget(Label(text='Port: '))
+        self.port = TextInput(multiline=False))
+        self.add_widget(self.port)
 
 
 class ChatIpApp(App):
