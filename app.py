@@ -24,15 +24,15 @@ class ConnectPage(GridLayout):
             prev_username = d[2]
         
         self.add_widget(Label(text='IP: '))
-        self.ip = TextInput(multiline=False)
+        self.ip = TextInput(text=prev_ip ,multiline=False)
         self.add_widget(self.ip)
         
         self.add_widget(Label(text='Port: '))
-        self.port = TextInput(multiline=False)
+        self.port = TextInput(text=prev_port, multiline=False)
         self.add_widget(self.port)
 
         self.add_widget(Label(text='Username: '))
-        self.username = TextInput(multiline=False)
+        self.username = TextInput(text=prev_username, multiline=False)
         self.add_widget(self.username)
         
         self.join = Button(text='Join')
