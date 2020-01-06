@@ -34,4 +34,28 @@ def receive_message(client_socket):
 
         message_length =  int(message_header.decode('utf-8').strip())
         return {'header': message_header, 'data': client_socket.recv(message_length)}
+    except:
+        return False
 
+while True:
+    read_sockets, _, excpetion_sockets =  select.select(socket_list, [], sockets_list)
+    
+    for notified_socket in read_sockets:
+        if notified_socket == server_socket:
+            client_socket, client_address = server_socket.accept()
+            user = receive_message(client_socket)
+
+        if user is False:
+            continue
+
+        socket_list.append(client_socket)
+        clients[client_socket] = user
+        print('Acepted new connection from {}:{}, username: {}'.format(*client_address,user['data'].decode('utf-8')))
+        else:
+            message = receive_message(notified_socket)
+            if message is False:
+                print('Closed connection from: {}'.format(clients[notified_socket]['data'].decode('utf-8')))
+                sockets_list.remove(notified_socket)
+                del clients[notified_socket]
+                continue
+            user = clients[notified_socket]
